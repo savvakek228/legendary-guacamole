@@ -1,13 +1,13 @@
 #pragma once
 class PlayField
 {
-	enum CellStatus
+	enum CellStatus//test
 	{
 		csEmpty,
 		csCross,
 		csNought
 	};
-	enum FieldStatus
+	enum FieldStatus//test
 	{
 		fsInvalid,
 		fsCrossesWin,
