@@ -44,22 +44,6 @@ std::vector<PlayField::CellPos> PlayField::getEmptyCells() const {
     return result;
 }
 
-//bool PlayField::hasWinInLine(PlayField::CellStatus player, bool row) const {
-//    int multiplier = row ? 1 : 3;
-//    for (int i = 0; i < 3; ++i) {
-//        if (_field[i] == player &&
-//            _field[i + 1 * multiplier] == player &&
-//            _field[i + 2 * multiplier] == player)
-//            return true;
-//    }
-//    return false;
-//}
-
-//bool PlayField::hasWinInDiagonal(PlayField::CellStatus player) const {
-//    return _field[0] == player && _field[4] == player && _field[8] == player ||
-//           _field[2] == player && _field[4] == player && _field[6] == player;
-//}
-
 bool PlayField::checkWinStatus(PlayField::CellStatus player,bool row) const {
     return hasWin(player, row);
 }
