@@ -1,79 +1,95 @@
 #pragma once
-#include <cassert>
-#include <vector>
-class PlayField
-{
-public:
-	enum CellStatus
-	{
-		csEmpty,
-		csCross,
-		csNought
-	};
-	enum FieldStatus
-	{
-		fsInvalid,
-		fsNormal,
-		fsCrossesWin,
-		fsNoughtsWin,
-		fsDraw
-	};
-	class CellIdx
-	{
-	public:
-		static CellIdx GetCellIdx(int id)
-		{
-			assert(id >= 0 || id < 9);
-			int row = 0;
-			int column = 0;
-			row = id / 3;
-			column = id % 3;
-			return CellIdx(row, column);
-		}
-		void SetCellIdx(int X, int Y,int ID)
-		{
-			cell_X = X;
-			cell_Y = Y;
-			cell_ID = ID;
-		}
-		CellIdx(int row, int column)
-		{
-			assert(row > 0 || column > 0 || row <= 2 || column <= 2);
-			cell_X = row;
-			cell_Y = column;
-			cell_ID = cell_X * 3 + cell_Y;
-		}
-		const int GetCellX() { return cell_X; }
-		const int GetCellY() { return cell_Y; }
-		const int GetCellID() { return cell_ID; }
-	private:
-		int cell_X;
-		int cell_Y;
-		int cell_ID;
-	};
 
-	CellStatus fieldState[9]{ csEmpty,csEmpty,csEmpty,csEmpty,csEmpty,csEmpty,csEmpty,csEmpty,csEmpty };
-	std::vector<CellIdx*> getEmptyCells();
-	PlayField makeMove(CellIdx square);
-	FieldStatus checkFieldStatus()
-	{
-		if (checkWin(csCross, fieldState)) return fsCrossesWin;
-		if (checkWin(csNought, fieldState)) return fsNoughtsWin;
-		auto emptyCells = getEmptyCells();
-		if (emptyCells.empty()) return fsDraw;
-		if (hasMoves()) return fsNormal;
-		else return fsInvalid;
-	}
+
+
+#include <vector>
+
+
+
+class PlayField {
+
+public:
+
+    class CellPos {
+
+    public:
+
+        explicit CellPos(int cellNum);
+
+        CellPos(int row, int column);
+
+
+
+        int getRow() const;
+
+
+
+        void setRow(int value);
+
+
+
+        int getColumn() const;
+
+
+
+        void setColumn(int value);
+
+
+
+        explicit operator int() const;
+
+    private:
+
+        int _row;
+
+        int _column;
+
+    };
+
+
+
+    enum class CellStatus {
+
+        csEmpty, csCross, csNought
+
+    };
+
+
+
+    enum class FieldStatus {
+
+        fsInvalid, fsNormal, fsCrossesWin, fsNoughtsWin, fsDraw
+
+    };
+
+
+
+    CellStatus operator[](const CellPos &cellPos) const;
+
+
+
+    std::vector<CellPos> getEmptyCells() const;
+
+
+
+    FieldStatus checkFieldStatus() const;
+
+
+
+    PlayField makeMove(const CellPos &cellPos) const;
+
+
 
 private:
-	CellStatus mark = csCross;
-	CellStatus operator[](CellIdx cell);
-	PlayField operator+(CellIdx cell);
-	bool hasMoves();
-	bool checkWin(PlayField::CellStatus mark, PlayField::CellStatus* fieldState);
-	bool hasHorizontal(PlayField::CellStatus mark, PlayField::CellStatus* fieldState);
-	bool hasVertical(PlayField::CellStatus mark, PlayField::CellStatus* fieldState);
-	bool hasDiagonal(PlayField::CellStatus mark, PlayField::CellStatus* fieldState);
-};
+    static constexpr int fieldSize = 3;
+    std::vector<CellStatus> _field = std::vector<CellStatus>(9, PlayField::CellStatus::csEmpty);
 
+    bool hasWin(CellStatus player,bool row = false) const;
+
+    bool checkWinStatus(CellStatus player) const;
+
+    int countCells(CellStatus cellStatus) const;
+
+    PlayField operator+(const CellPos &cellPos) const;
+};
 
