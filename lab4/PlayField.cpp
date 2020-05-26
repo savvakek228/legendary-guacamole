@@ -120,9 +120,7 @@ PlayField::FieldStatus PlayField::checkFieldStatus() const {
 
 PlayField PlayField::operator+(const CellPos &cellPos) const {
 
-    PlayField newField;
-
-    newField._field = _field;
+    PlayField newField = *this;
 
     newField._field[int(cellPos)] =
 
