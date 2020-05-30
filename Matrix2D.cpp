@@ -1,12 +1,9 @@
 #include "Matrix2D.h"
 
-Matrix2D::Matrix2D(unsigned int iSize) : MatrixBase(iSize)
+Matrix2D::Matrix2D() : MatrixBase(size)
 {
-	matrix = new int* [iSize];
-	for (unsigned int i = 0; i < iSize; i++)
+	for (unsigned int i = 0; i < size*size; i++)
 	{
-		matrix[i] = new int[iSize];
-		for (int j = 0; j < iSize; j++)
-			matrix[i][j] = i * iSize + j + 1;
+			matrix[i] = i+1;
 	}
 }

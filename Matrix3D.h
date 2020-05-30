@@ -4,10 +4,10 @@
 class Matrix3D : public MatrixBase
 {
 public:
-	explicit Matrix3D(unsigned int iSize);
-
-	~Matrix3D() { delete[] matrix; }
-
-	int element(unsigned int i, unsigned int j) const override { return matrix[i][j]; }
-	int& element(unsigned int i, unsigned int j) override { return matrix[i][j]; }
+	explicit Matrix3D();
+	int element(unsigned int i, unsigned int j) const override { return matrix[i*size+j]; }
+	int& element(unsigned int i, unsigned int j) override { return matrix[i*size+j]; }
+private:
+    static constexpr int size = 3;
+	int matrix[size*size];
 };

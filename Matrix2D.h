@@ -4,10 +4,11 @@
 class Matrix2D: public MatrixBase
 {
 public:
-	explicit Matrix2D(unsigned int iSize);
+    explicit Matrix2D ();
+	int element(unsigned int i, unsigned int j) const override { return matrix[i*size+j]; }
+	int& element(unsigned int i, unsigned int j) override { return matrix[i*size+j]; }
+private:
+    static constexpr int size = 2;
+    int matrix[size * size];
 
-	~Matrix2D() { delete[] matrix; }
-
-	int element(unsigned int i, unsigned int j) const override { return matrix[i][j]; }
-	int& element(unsigned int i, unsigned int j) override { return matrix[i][j]; }
 };
